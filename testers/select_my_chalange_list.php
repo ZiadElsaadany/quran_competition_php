@@ -1,36 +1,24 @@
 <?php 
 
+// select all challenges --> availability = 1
+
 include "../db_con.php" ; 
 $my_chalange_list = array( );
 
 
-$tester_id =$_GET["tetser_id"]; 
+$tester_id =$_GET["id"]; 
 $response = new stdClass();
 
-$select_chalanges_tester = mysqli_query (  
+$select_my_challenge =mysqli_query( 
     $con , 
-    "SELECT  * FROM `chalange_testers`  WHERE `tester_id` = '$tester_id'"
-); 
+    "SELECT * FROM `chalange_list` WHERE  `tester_id` = '$tester_id' AND `chalange_availability` = 1"
+);
+while($row  = mysqli_fetch_object($select_my_challenge)) {  
 
-while($row  =  mysqli_fetch_object($select_chalanges_tester)     ) { 
-    
-    $select_chalanges = mysqli_query(  
-        $con , 
-         "SELECT * FROM `chalange_list` WHERE `chalange_id` = '$row->chalange_id' "
-     ) ;
-   
- 
- $fetch = mysqli_fetch_object(  
-    $select_chalanges
- ); 
- 
-      $my_chalange_list[] = $fetch; 
+$my_chalange_list [] = $row ;
+ }
 
-}
-$response->status = true ;
-$response->data= $my_chalange_list ;
-echo json_encode(  
-    $response
- ); 
-
+ $response->status = true; 
+ $response->data = $my_chalange_list ;
+ echo    json_encode($response);
 ?>  

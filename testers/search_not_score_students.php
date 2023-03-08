@@ -6,12 +6,14 @@
 $not_solved_array = array( )  ;    
  
 
-$chalange_id =  $_GET["id"] ;   
+$chalange_id =  $_GET["id"] ;
+$name =  $_GET["name"] ;   
+
 $response =new stdClass() ;
  $select_student  =  mysqli_query (
 
     $con  , 
-    "SELECT * FROM `student` WHERE chalange_id  = $chalange_id AND student.accept_student = 1  ORDER BY  `student_age` ASC,  `student_name` ASC 
+    "SELECT * FROM `student` WHERE chalange_id  = $chalange_id AND student.accept_student = 1 AND student.student_name LIKE '%$name%' ORDER BY  `student_age` ASC,  `student_name` ASC 
     
     "
 

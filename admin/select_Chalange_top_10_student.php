@@ -24,8 +24,10 @@
      student.student_id = student_scores.student_id
      AND 
      student.accept_student = 1
+     AND
+     student.block_or_not= 'not'
 
-    ORDER BY  `score_value` DESC, `student_age` ASC ,`student_name` ASC   LIMIT 10
+    ORDER BY  `score_value` DESC, `student_age` ASC ,`student_name` ASC   LIMIT 20
    " 
  );  
 

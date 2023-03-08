@@ -1,12 +1,15 @@
 <?php 
 
 include "../db_con.php" ; 
+$json = file_get_contents('php://input') ; 
 
-$student_id=6;
-$student_name = 'youssef 2 '; 
-$student_age = 20 ; 
-$student_phone = "1"; 
-$student_address = "nvkv";
+$obj = json_decode( $json, true ) ;
+
+$student_id=$obj["id"];
+$student_name = $obj["name"]; 
+$student_age = $obj["age"]; 
+$student_phone = $obj["phone"]; 
+$student_address = $obj["address"];
 $select_update_student= mysqli_query(
     $con, //  
     "SELECT * FROM `student` WHERE `student_id` = '$student_id'"           
@@ -39,7 +42,8 @@ else {
 
 $edit_student = mysqli_query(
     $con ,
-    "UPDATE `student` SET `student_name` ='$student_name', `student_age` ='$student_age' , `student_phone` = '$student_phone' , `student_address` ='$student_address'  WHERE `student_id` ='$student_id'"
+    "UPDATE `student` SET `student_name` ='$student_name', `student_age` ='$student_age' , `student_phone` = '$student_phone' , `student_address` ='$student_address'
+     WHERE `student_id` ='$student_id'"
 );
 
 

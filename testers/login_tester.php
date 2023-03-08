@@ -4,38 +4,45 @@ include  "../db_con.php";
 
  // admin insert this data
 
+ $json = file_get_contents('php://input') ; 
 
-$phone  = "014578511"; 
-$pass = "012560"; 
+ $obj = json_decode( $json, true ) ;
 
+
+$phone  = $obj["phone"]; 
+$pass = $obj["password"]; 
+
+$response = new stdClass( ) ;
 
 $select = mysqli_query(  
     $con , 
     "SELECT * FROM `testers` WHERE   tester_phone  = '$phone'  "
 );
 
+$fetch = mysqli_fetch_object($select); 
+
 
 if( mysqli_num_rows($select) == 0 ) {  
-    $map = [ "message"=>"phone_not_found" ];
-    echo json_encode($map); 
+
+    $response->status = false; 
+    $response->message = "المستخدم غير موجود"; 
+    echo json_encode($response); 
  }
  else{  
-
-    $select_value  = mysqli_fetch_object($select);
     
-    if($pass == $select_value->tester_login_password) {  
-        $map  =   [
-            'message'=>"success", 
-            "tester_id"=>json_decode( $select_value->tester_id),
-            "tester_name"=>$select_value->tester_name
-        ];
+    if($pass == $fetch->tester_login_password) { 
+        $response ->status =true ; 
+        $response -> message = "تم الدخول بنجاح" ;
+        $response->tester_id =$fetch->tester_id      ;
+       
 
-        echo  json_encode($map); 
+        echo  json_encode($response); 
     }else{  
-        $map=  [  
-            "message"=>"wrong_password", 
-        ];
-        echo    json_encode($map)   ;
+        $response ->status =false ; 
+        $response->message ="كلمة السر خاطئة"      ;
+       
+
+        echo  json_encode($response); 
     }
 
  }

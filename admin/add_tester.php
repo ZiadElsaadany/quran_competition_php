@@ -1,9 +1,14 @@
 <?php  
   
-  include "../db_con.php";  
-   $phone  =$_GET["phone"];
-   $tester_name  = $_GET["name"]; 
-   $tester_login_pass  = $_GET["password"];
+  include "../db_con.php";
+  
+  
+ $json = file_get_contents('php://input') ; 
+
+ $obj = json_decode( $json, true ) ;
+   $phone  =$obj["phone"];
+   $tester_name  = $obj["name"]; 
+   $tester_login_pass  = $obj["password"];
    $response = new stdClass(); 
 
    $select_tester = mysqli_query(  

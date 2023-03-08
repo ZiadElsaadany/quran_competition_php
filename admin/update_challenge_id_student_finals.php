@@ -8,12 +8,12 @@ $student_id = $_GET["student_id"]   ;
 $response  = new stdClass(); 
 $select_before_update = mysqli_query(
     $con , 
-    "SELECT * FROM `student` WHERE student_id = '$student_id'"
+    "SELECT student.chalange_id FROM `student` WHERE student_id = '$student_id'"
 );
 
 $fetch_obj = mysqli_fetch_object($select_before_update);
 
-if($fetch_obj->chalange_id == $challenge_id) {   
+if($fetch_obj == $challenge_id) {   
     $response->status = true; 
     $response->message = "تم الاضافة بنجاح" ;
     echo json_encode($response);
@@ -28,7 +28,8 @@ if(mysqli_affected_rows($con)) {
 $response->status = true; 
 $response->message = "تم الاضافة بنجاح" ;
 echo json_encode($response);
-}else{ 
+}
+else{ 
     $response->status = false; 
     $response->message = "لم تتم الاضافة " ;
     echo json_encode($response);

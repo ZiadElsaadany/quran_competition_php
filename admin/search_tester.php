@@ -8,7 +8,7 @@
    $array_testers = array( );
  $response =new stdClass();
  
-   $search_name = "a"; 
+   $search_name = $_GET["q"]; 
 
  $select_tester = mysqli_query(  
     $con, 

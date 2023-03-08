@@ -3,50 +3,37 @@
 
 include "../db_con.php" ; 
 
+$student_id = $_GET["student_id"]   ; 
+$tester_id=   $_GET["tester_id"] ;
+$score_value  = $_GET["score"] ;
+$challenge_id= $_GET["challenge_id"]; 
 
-$student_id = 15   ; 
-$tester_id=   1 ;
-$score_value  = 400 ;
-$chalange_id= 1 ; 
+
+$response = new stdClass( ) ; 
 
 
 $insert_score  = mysqli_query   (
     $con, 
-    "INSERT INTO `student_scores` (`student_id`, `tester_id`, `date`, `score_value`, `chalange_id`) 
-                             VALUES ( '$student_id', '$tester_id', current_timestamp(), '$score_value', '$chalange_id')"
+    "INSERT INTO `student_scores` (`student_id`, `tester_id`, `score_value`, `chalange_id`) 
+                             VALUES ( '$student_id', '$tester_id', '$score_value', '$challenge_id')"
  )  ;
 
- 
 
 
  if( mysqli_insert_id($con) ) {
 
-   $select = mysqli_query( 
-       $con ,
-       "SELECT student_scores.*,student.*,chalange_list.*  FROM  `student_scores`, `student` ,`chalange_list` 
-       
-       
-       WHERE
-       
-       chalange_list.chalange_id = $chalange_id AND
-       
-        student.`student_id` = '$student_id'  AND student_scores.`student_id`  = '$student_id' "
-   );
-
-
-   $fetch = mysqli_fetch_object($select); 
-   // [] --> map
-   $map = [
-      "status" => "true", 
-      "message" => "تم اضافة الدرحة" , 
-      "score_value" => $fetch
-
-   ];
+   $response->status= true; 
+   $response->message = "تم اضافة الدرحة"; 
     
-    echo json_encode($map); 
+    echo json_encode($response); 
 
  }else{  
-    echo "no score instered"; 
+   
+   $response->status= false; 
+   $response->message = "حدثت مشكلة"; 
+    
+    echo json_encode($response); 
+
  }
 
 ?>

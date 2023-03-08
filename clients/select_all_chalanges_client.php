@@ -1,6 +1,7 @@
 <?php 
 
 include "../db_con.php";
+// all students from category name
 
 $response = new stdClass( ); 
  

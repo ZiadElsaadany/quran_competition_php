@@ -20,6 +20,7 @@
         student_scores.chalange_id = chalange_list.chalange_id
       AND
       student.accept_student = 1
+   
     
      ORDER BY  `student_age`  ASC,  `student_name` ASC
     " 

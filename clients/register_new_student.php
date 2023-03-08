@@ -5,16 +5,25 @@
 
 
 include "../db_con.php" ; 
-$student_name = "mohamed"; 
-$student_age  = 20 ; 
-$student_phone ="200"; 
-$student_address= "kafr elzayat"; 
-$student_study_grade ="A"; 
-$student_image_url = "skjbso"; 
-$national_id_image_url="d;knd;";
-$chalange_id = 15; 
-$student_national_id="2002" ; 
-$category_name = "quran"; 
+
+$json = file_get_contents('php://input') ; 
+
+$obj = json_decode( $json, true ) ;
+ 
+
+
+
+$student_name = $obj["name"]; 
+$student_age  = $obj["age"] ; 
+$student_phone =$obj["phone"]; 
+$student_address= $obj["address"]; 
+$student_study_grade =$obj["study"]; 
+$student_image_url = $obj["imageUrl"]; 
+$national_id_image_url=$obj["natinoalImageUrl"];
+$chalange_id = $obj["challenge_id"]; 
+$student_national_id=$obj["nationalId"] ; 
+$category_name = $obj["categoryName"]; 
+$accept_student = $obj["accept"]; 
 
 $response = new stdClass( );
 
@@ -26,7 +35,7 @@ $select_student  = mysqli_query (
 );
 $select_student_  =mysqli_query(  
     $con , 
-    "SELECT student.*,chalange_list.* FROM `student`,`chalange_list` WHERE student.`student_national_id`= '$student_national_id' AND 
+    "SELECT student.*FROM `student` WHERE student.`student_national_id`= '$student_national_id' AND 
     student.main_category= '$category_name'"
     
 );

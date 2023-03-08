@@ -21,7 +21,6 @@ while ($row  = mysqli_fetch_object($select_all_degree) )   {
       ); 
       $fetch = mysqli_fetch_object($select_all_score) ;
       $row->score_value = $fetch->score_value;
-
       $chalange_degree_array [] = $row   ; 
 
  } 

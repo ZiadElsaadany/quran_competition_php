@@ -13,7 +13,9 @@ $select_students =  mysqli_query (
      AND
      chalange_list.chalange_id = $chalange_id 
      AND 
-    student.accept_student = 0  ORDER By   `student_age` ASC,`student_name` ASC "  
+    student.accept_student = 0  
+    AND student.block_or_not= 'not'
+    ORDER By   `student_age` ASC,`student_name` ASC "  
 ) ;
 
 while($row=mysqli_fetch_object( $select_students) )  {  
