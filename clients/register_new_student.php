@@ -6,12 +6,9 @@
 
 include "../db_con.php" ; 
 
-$json = file_get_contents('php://input') ; 
+$json = file_get_contents('php://input'); 
 
-$obj = json_decode( $json, true ) ;
- 
-
-
+$obj = json_decode( $json, true );
 
 $student_name = $obj["name"]; 
 $student_age  = $obj["age"] ; 
@@ -23,15 +20,11 @@ $national_id_image_url=$obj["natinoalImageUrl"];
 $chalange_id = $obj["challenge_id"]; 
 $student_national_id=$obj["nationalId"] ; 
 $category_name = $obj["categoryName"]; 
-$accept_student = $obj["accept"]; 
-
-$response = new stdClass( );
-
+$response = new stdClass();
 $select_student  = mysqli_query (  
     $con, 
     "SELECT student.* FROM `student` WHERE student.`student_phone`= '$student_phone' AND
-    student.main_category= '$category_name'
-     "
+    student.main_category= '$category_name'"
 );
 $select_student_  =mysqli_query(  
     $con , 
@@ -58,13 +51,12 @@ $register_student = mysqli_query(
     $con, 
     "INSERT INTO `student` (
          `student_name`, `student_age`, `student_phone`, `student_address`, `student_study_grade`, `student_image_url`, 
-        `national_id_image_url`, `register_date`, `chalange_id`, `student_national_id`, `main_category`) 
+        `national_id_image_url`, `register_date`, `chalange_id`, `student_national_id`, `main_category`,`accept_student`) 
         VALUES
          ( '$student_name', '$student_age', '$student_phone', '$student_address', '$student_study_grade', '$student_image_url', 
          '$national_id_image_url', 
          current_timestamp(), '$chalange_id', '$student_national_id', 
-         '$category_name'
-         )"
+         '$category_name','0')"
 );
 
 

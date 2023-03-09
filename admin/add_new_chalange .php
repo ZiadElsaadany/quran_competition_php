@@ -1,22 +1,10 @@
 <?php
-
- 
- 
- 
  include "../db_con.php"; 
-
-
-
- $json = file_get_contents('php://input') ; 
-
- $obj = json_decode( $json, true ) ;
-
-
- $chalange_name = $obj["name"] ; 
- $chalange_details=$obj["details"]; 
- $chalange_availability = $obj["availability"]; 
- $category_name = $obj["categoryName"] ; 
- $tester_id = $obj["tester_id"]; 
+ $chalange_name = $_GET["name"] ; 
+ $chalange_details=$_GET["details"]; 
+ $chalange_availability = $_GET["availability"]; 
+ $category_name = $_GET["categoryName"] ; 
+ $tester_id = $_GET["testerId"]; 
  $response = new stdClass( ); 
 
  $select_dublicate_chalange = mysqli_query(
@@ -25,7 +13,6 @@ $con ,
  ) ;
 
  if(mysqli_num_rows($select_dublicate_chalange) >0){  
-
 
     $response->status= true; 
     $response->message= "تم اضافة هذه المسابقة من قبل"; 

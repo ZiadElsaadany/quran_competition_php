@@ -30,7 +30,7 @@ while ( $row = mysqli_fetch_object($select_student))  {
 }
 $response->status =true;
 $response->data = $array_students;
-echo  json_encode($array_students); 
+echo  json_encode($response); 
 
 
 ?>

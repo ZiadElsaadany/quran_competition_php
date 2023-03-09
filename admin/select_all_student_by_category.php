@@ -13,7 +13,7 @@ $select_all_student = mysqli_query(
     WHERE student.chalange_id= chalange_list.chalange_id
     AND student.accept_student=1 AND student.block_or_not='not' AND
     chalange_list.main_category = '$category_name'
-     ORDER BY `student_name` ASC"
+     ORDER BY `student_age` ASC ,`student_name` ASC"
 ); 
 
 

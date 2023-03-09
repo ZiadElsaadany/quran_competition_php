@@ -3,17 +3,17 @@
  
 include  "../db_con.php"; 
 
+$challenge_id = $_GET["id"];
+
 $chalange_degree_array    =array( )  ; 
 
 
 $select_all_degree = mysqli_query(
     $con, 
-    "SELECT * FROM `student`" 
+    "SELECT * FROM `student` " 
 );
 while ($row  = mysqli_fetch_object($select_all_degree) )   {  
 
-
-    // row    -->    $row -> student_id
 
      $select_all_score  = mysqli_query (  
         $con, 

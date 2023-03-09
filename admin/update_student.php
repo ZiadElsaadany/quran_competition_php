@@ -1,32 +1,30 @@
 <?php 
 
 include "../db_con.php" ; 
-$json = file_get_contents('php://input') ; 
 
-$obj = json_decode( $json, true ) ;
 
-$student_id=$obj["id"];
-$student_name = $obj["name"]; 
-$student_age = $obj["age"]; 
-$student_phone = $obj["phone"]; 
-$student_address = $obj["address"];
+$student_id=$_GET["id"];
+$student_name = $_GET["name"]; 
+$student_age = $_GET["age"]; 
+$student_phone = $_GET["phone"]; 
+$student_address = $_GET["address"];
+$response=  new stdClass( ) ;
+$arr = array(); 
 $select_update_student= mysqli_query(
     $con, //  
     "SELECT * FROM `student` WHERE `student_id` = '$student_id'"           
 ) ;
 
 
-
 $fetch = mysqli_fetch_object( $select_update_student );
+
 if($fetch->student_name == $student_name   && $fetch->student_age  == $student_age && $fetch->student_phone ==$student_phone && $fetch->student_address == $student_address  ) 
 {
-    $map = [ 
-        "status"=>"true",
-        "message"=>"تم تعديل بيانات الطالب بنجاح", 
-        "data" => $fetch
+    $response->status = true; 
+    $response->message = "تم تعديل بيانات الطالب بنجاح" ; 
 
-    ]  ;
-    echo json_encode($map); 
+    
+    echo json_encode($response); 
 }
 
 else { 
@@ -56,33 +54,29 @@ $fetch_after_update = mysqli_fetch_object( $select_after_update );
 
 if(mysqli_affected_rows($con) > 0 )  {  
     
-    $map = [
-        "status"=>"true",
-        "message"=>"تم تعديل بيانات الطالب بنجاح", 
-        "data" => $fetch_after_update
+    $response->status = true; 
+    $response->message = "تم تعديل بيانات الطالب بنجاح" ; 
 
-    ]  ;
-    echo json_encode($map); 
+    
+    echo json_encode($response); 
+  
 }else{  
-    $map = [ 
-        "status"=>"false",
-        "message"=>"حدثت مشكلة", 
-        "data" => $fetch
 
-    ]  ;
-    echo json_encode($map); 
+    $response->status = false; 
+    $response->message = "حدثت مشكلة" ; 
+
+
+    echo json_encode($response); 
 }
     
 }else{  
-    $map = [ 
-        "status"=>"false",
-        "message"=>"عذرا لم يتم التعديل يجب ادخال رقم تليفون غير مكرر", 
-        "data" => $fetch
+    $response->status = false; 
+    $response->message = "عذرا لم يتم التعديل يجب ادخال رقم تليفون غير مكرر" ; 
 
-    ]  ;
-    echo json_encode($map); 
+    
+    echo json_encode($response); 
+
  
 } 
-
 }
 ?>
